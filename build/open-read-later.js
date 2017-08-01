@@ -108,12 +108,9 @@ var parseLinkEntry = function (linkEntryText) {
 };
 var createReadLaterList = function (linkEntries) { return ({ links: linkEntries }); };
 var parseReadLaterList = function (readLaterText) {
-    return util_1.pipe(function (text) { return text.split('---'); }, function (entries) { return entries.map(function (entry) { return entry.trim(); }); }, parseReadLaterListEntries([]), createReadLaterList)(readLaterText);
+    return util_1.pipe(function (text) { return text.split('---'); }, function (entries) { return entries.map(function (entry) { return entry.trim(); }); }, function (entryTexts) { return entryTexts.reduce(function (acc, entryText) { return acc.concat([parseLinkEntry(entryText)]); }, []); }, createReadLaterList)(readLaterText);
 };
 exports.parseReadLaterList = parseReadLaterList;
-var parseReadLaterListEntries = function (acc) { return function (entryTexts) {
-    return entryTexts.reduce(function (acc, entryText) { return acc.concat([parseLinkEntry(entryText)]); }, acc);
-}; };
 
 
 /***/ }),

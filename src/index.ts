@@ -39,12 +39,8 @@ const createReadLaterList = (linkEntries: LinkEntry[]): ReadLaterList => ({links
 const parseReadLaterList = (readLaterText: string): ReadLaterList =>
     pipe( text => text.split('---')
         , entries => entries.map(entry => entry.trim())
-        , parseReadLaterListEntries([])
+        , entryTexts => entryTexts.reduce((acc, entryText) => [...acc, parseLinkEntry(entryText)], [])
         , createReadLaterList
         )(readLaterText);
-
-type parseReadLaterListEntries = (acc: LinkEntry[]) => (entryTexts: string[]) => LinkEntry[];
-const parseReadLaterListEntries: parseReadLaterListEntries = acc => entryTexts =>
-    entryTexts.reduce((acc, entryText) => [...acc, parseLinkEntry(entryText)], acc);
 
 export { parseReadLaterList };
