@@ -116,10 +116,10 @@ var createReadLaterList = function () {
     }
     return ({ links: linkEntries });
 };
-exports.createReadLaterList = createReadLaterList;
 var parseReadLaterList = function (readLaterText) {
     return util_1.pipe(function (text) { return text.split('---'); }, function (entries) { return entries.map(function (entry) { return entry.trim(); }); }, parseReadLaterListEntries, createReadLaterList)(readLaterText);
 };
+exports.parseReadLaterList = parseReadLaterList;
 var parseReadLaterListEntries = function (entryTexts) { return function (entries) {
     if (entryTexts.length === 0) {
         return entries;

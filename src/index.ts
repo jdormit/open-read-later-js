@@ -54,4 +54,4 @@ const parseReadLaterListEntries: parseReadLaterListEntries = entryTexts => entri
     }
 };
 
-export { createReadLaterList };
+export { parseReadLaterList };
