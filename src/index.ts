@@ -27,10 +27,13 @@ const parseColonDelimitedFields = (fields: string[]): any =>
                  , {}
                  );
 
-// TODO handle tags parsing
+const parseCommaSeparatedValues = (values: string): string[] =>
+    values.split(',').map(v => v.trim());
+
 const parseLinkEntry = (linkEntryText: string): LinkEntry =>
     pipe( text => text.split('\n')
           , parseColonDelimitedFields
+          , ({tags, ...fields}) => typeof tags === 'undefined' ? fields : {tags: parseCommaSeparatedValues(tags), ...fields}
           , createLinkEntry
         )(linkEntryText);
 

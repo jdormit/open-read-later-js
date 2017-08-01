@@ -87,6 +87,15 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     }
     return t;
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
+            t[p[i]] = s[p[i]];
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = __webpack_require__(1);
 var createLinkEntry = function (_a) {
@@ -102,9 +111,15 @@ var parseColonDelimitedFields = function (fields) {
         })(field);
     }, {});
 };
+var parseCommaSeparatedValues = function (values) {
+    return values.split(',').map(function (v) { return v.trim(); });
+};
 // TODO handle tags parsing
 var parseLinkEntry = function (linkEntryText) {
-    return util_1.pipe(function (text) { return text.split('\n'); }, parseColonDelimitedFields, createLinkEntry)(linkEntryText);
+    return util_1.pipe(function (text) { return text.split('\n'); }, parseColonDelimitedFields, function (_a) {
+        var tags = _a.tags, fields = __rest(_a, ["tags"]);
+        return typeof tags === 'undefined' ? fields : __assign({ tags: parseCommaSeparatedValues(tags) }, fields);
+    }, createLinkEntry)(linkEntryText);
 };
 var createReadLaterList = function (linkEntries) { return ({ links: linkEntries }); };
 var parseReadLaterList = function (readLaterText) {
