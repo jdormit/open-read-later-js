@@ -97,7 +97,7 @@ var parseColonDelimitedFields = function (fields) {
     return fields.reduce(function (fieldsObj, field) {
         return util_1.pipe(function (f) { return /^(.+?):\s?(.+)$/.exec(f); }, function (_a) {
             var _ = _a[0], key = _a[1], val = _a[2];
-            return (__assign((_b = {}, _b[key] = val, _b), fieldsObj));
+            return (__assign((_b = {}, _b[key.trim()] = val.trim(), _b), fieldsObj));
             var _b;
         })(field);
     }, {});

@@ -22,7 +22,7 @@ const createLinkEntry = ({url, title, tags}: LinkEntryConfig): LinkEntry =>
 const parseColonDelimitedFields = (fields: string[]): any =>
     fields.reduce((fieldsObj, field) =>
                   pipe( f => /^(.+?):\s?(.+)$/.exec(f)
-                      , ([_, key, val]) => ({ [key]: val, ...fieldsObj})
+                      , ([_, key, val]) => ({ [key.trim()]: val.trim(), ...fieldsObj})
                       )(field)
                  , {}
                  );
