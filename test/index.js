@@ -13,6 +13,18 @@ tags: tag2, tag3, tag4
 url: https://jeremydormitzer.com
 title: The best website ever`;
 
+const readLaterTextRepeatedUrls =
+`url: https://example.com
+title: Example One
+tags: tag1, tag2
+---
+url: https://example.com
+title: Example Two
+tags: tag2, tag3, tag4
+---
+url: https://jeremydormitzer.com
+title: The best website ever`;
+
 describe('ReadLaterList', function() {
     describe('parsing', function() {
         it('should parse a standard Open Read-Later-formatted text', function() {
@@ -35,6 +47,9 @@ describe('ReadLaterList', function() {
                     }
                 ]
             });
+        });
+        it('should throw an error for non-unique urls', function() {
+            expect(() => openReadLater.parseReadLaterList(readLaterTextRepeatedUrls)).to.throw();
         });
     });
 });
