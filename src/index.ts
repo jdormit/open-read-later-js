@@ -29,9 +29,9 @@ const parseColonDelimitedFields = (fields: string[]): any =>
 
 const parseLinkEntry = (linkEntryText: string): LinkEntry =>
     pipe( text => text.split('\n')
-          , parseColonDelimitedFields
-          , ({tags, ...fields}) => typeof tags === 'undefined' ? fields : {tags: tags.split(',').map(tag => tag.trim()), ...fields}
-          , createLinkEntry
+        , parseColonDelimitedFields
+        , ({tags, ...fields}) => typeof tags === 'undefined' ? fields : {tags: tags.split(',').map(tag => tag.trim()), ...fields}
+        , createLinkEntry
         )(linkEntryText);
 
 const createReadLaterList = (linkEntries: LinkEntry[]): ReadLaterList => ({links: linkEntries});
