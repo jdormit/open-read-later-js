@@ -1,24 +1,10 @@
 import { pipe } from './util';
+import { ReadLaterList
+       , LinkEntry
+       , createReadLaterList
+       , createLinkEntry
+       } from './readLaterList';
 import { validateReadLaterList } from './validator';
-
-export interface LinkEntry
-    { url: string
-    , title: string
-    , tags?: string[]
-    }
-
-type LinkEntryConfig = LinkEntry;
-
-export interface ReadLaterList
-    { links: LinkEntry[]
-//    , addLink: (link: LinkEntryConfig) => ReadLaterList
-//    , removeLink: (url: string) => ReadLaterList
-//    , getLink: (url: string) => LinkEntry
-//    , updateLink: (url: string, newLink: LinkEntryConfig) => ReadLaterList
-    }
-
-const createLinkEntry = ({url, title, tags}: LinkEntryConfig): LinkEntry =>
-    typeof tags === 'undefined' ? {url, title} : {url, title, tags};
 
 const parseColonDelimitedFields = (fields: string[]): any =>
     fields.reduce((fieldsObj, field) =>
@@ -35,8 +21,6 @@ const parseLinkEntry = (linkEntryText: string): LinkEntry =>
         , createLinkEntry
         )(linkEntryText);
 
-const createReadLaterList = (linkEntries: LinkEntry[]): ReadLaterList => ({links: linkEntries});
-
 const parseReadLaterList = (readLaterText: string): ReadLaterList =>
     pipe( text => text.split('---')
         , entries => entries.map(entry => entry.trim())
@@ -45,4 +29,6 @@ const parseReadLaterList = (readLaterText: string): ReadLaterList =>
         , validateReadLaterList
         )(readLaterText);
 
-export { parseReadLaterList };
+export { parseReadLaterList
+       , ReadLaterList
+       };

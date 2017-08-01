@@ -111,11 +111,8 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = __webpack_require__(0);
-var validator_1 = __webpack_require__(4);
-var createLinkEntry = function (_a) {
-    var url = _a.url, title = _a.title, tags = _a.tags;
-    return typeof tags === 'undefined' ? { url: url, title: title } : { url: url, title: title, tags: tags };
-};
+var readLaterList_1 = __webpack_require__(4);
+var validator_1 = __webpack_require__(5);
 var parseColonDelimitedFields = function (fields) {
     return fields.reduce(function (fieldsObj, field) {
         return util_1.pipe(function (f) { return /^(.+?):\s?(.+)$/.exec(f); }, function (_a) {
@@ -129,11 +126,10 @@ var parseLinkEntry = function (linkEntryText) {
     return util_1.pipe(function (text) { return text.split('\n'); }, parseColonDelimitedFields, function (_a) {
         var tags = _a.tags, fields = __rest(_a, ["tags"]);
         return typeof tags === 'undefined' ? fields : __assign({}, fields, { tags: tags.split(',').map(function (tag) { return tag.trim(); }) });
-    }, createLinkEntry)(linkEntryText);
+    }, readLaterList_1.createLinkEntry)(linkEntryText);
 };
-var createReadLaterList = function (linkEntries) { return ({ links: linkEntries }); };
 var parseReadLaterList = function (readLaterText) {
-    return util_1.pipe(function (text) { return text.split('---'); }, function (entries) { return entries.map(function (entry) { return entry.trim(); }); }, function (entryTexts) { return entryTexts.reduce(function (acc, entryText) { return acc.concat([parseLinkEntry(entryText)]); }, []); }, createReadLaterList, validator_1.validateReadLaterList)(readLaterText);
+    return util_1.pipe(function (text) { return text.split('---'); }, function (entries) { return entries.map(function (entry) { return entry.trim(); }); }, function (entryTexts) { return entryTexts.reduce(function (acc, entryText) { return acc.concat([parseLinkEntry(entryText)]); }, []); }, readLaterList_1.createReadLaterList, validator_1.validateReadLaterList)(readLaterText);
 };
 exports.parseReadLaterList = parseReadLaterList;
 
@@ -172,6 +168,22 @@ exports.default = trace;
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var createReadLaterList = function (linkEntries) { return ({ links: linkEntries }); };
+exports.createReadLaterList = createReadLaterList;
+var createLinkEntry = function (_a) {
+    var url = _a.url, title = _a.title, tags = _a.tags;
+    return typeof tags === 'undefined' ? { url: url, title: title } : { url: url, title: title, tags: tags };
+};
+exports.createLinkEntry = createLinkEntry;
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
