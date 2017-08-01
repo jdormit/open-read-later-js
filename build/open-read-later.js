@@ -114,7 +114,6 @@ var parseColonDelimitedFields = function (fields) {
 var parseCommaSeparatedValues = function (values) {
     return values.split(',').map(function (v) { return v.trim(); });
 };
-// TODO handle tags parsing
 var parseLinkEntry = function (linkEntryText) {
     return util_1.pipe(function (text) { return text.split('\n'); }, parseColonDelimitedFields, function (_a) {
         var tags = _a.tags, fields = __rest(_a, ["tags"]);
