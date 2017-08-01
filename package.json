@@ -5,13 +5,15 @@
   "main": "build/open-read-later.js",
   "scripts": {
     "build": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [],
   "author": "Jeremy Dormitzer <jeremy.dormitzer@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "chai": "^4.1.0",
     "immutable": "^3.8.1",
+    "mocha": "^3.5.0",
     "ts-loader": "^2.3.2",
     "typescript": "^2.4.2",
     "webpack": "^3.4.1"
