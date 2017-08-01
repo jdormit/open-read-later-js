@@ -1,0 +1,19 @@
+{
+  "name": "open-read-later-js",
+  "version": "0.1.0",
+  "description": "A JavaScript implementation of the Open Read-Later specification",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Jeremy Dormitzer <jeremy.dormitzer@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "immutable": "^3.8.1",
+    "ts-loader": "^2.3.2",
+    "typescript": "^2.4.2",
+    "webpack": "^3.4.1"
+  }
+}
