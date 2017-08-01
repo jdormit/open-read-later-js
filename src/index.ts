@@ -17,12 +17,12 @@ interface ReadLaterList
     }
 
 const createLinkEntry = ({url, title, tags}: LinkEntryConfig): LinkEntry =>
-    ({url, title, tags});
+    typeof tags === 'undefined' ? {url, title} : {url, title, tags};
 
 const parseColonDelimitedFields = (fields: string[]): any =>
     fields.reduce((fieldsObj, field) =>
-                  pipe( f => /^(.+):\s?(.+)$/.exec(f)
-                      , ([key, val]) => ({ [key]: val, ...fieldsObj})
+                  pipe( f => /^(.+?):\s?(.+)$/.exec(f)
+                      , ([_, key, val]) => ({ [key]: val, ...fieldsObj})
                       )(field)
                  , {}
                  );
@@ -31,26 +31,26 @@ const parseColonDelimitedFields = (fields: string[]): any =>
 const parseLinkEntry = (linkEntryText: string): LinkEntry =>
     pipe( text => text.split('\n')
           , parseColonDelimitedFields
-          , ({url, title, tags}) => createLinkEntry({url, title, tags})
+          , createLinkEntry
         )(linkEntryText);
 
-const createReadLaterList = (...linkEntries: LinkEntry[]): ReadLaterList => ({links: linkEntries});
+const createReadLaterList = (linkEntries: LinkEntry[]): ReadLaterList => ({links: linkEntries});
 
 const parseReadLaterList = (readLaterText: string): ReadLaterList =>
     pipe( text => text.split('---')
         , entries => entries.map(entry => entry.trim())
-        , parseReadLaterListEntries
+        , parseReadLaterListEntries([])
         , createReadLaterList
         )(readLaterText);
 
-type parseReadLaterListEntries = (entryTexts: string[]) => (entries: LinkEntry[]) => LinkEntry[];
-const parseReadLaterListEntries: parseReadLaterListEntries = entryTexts => entries =>
+type parseReadLaterListEntries = (entries: LinkEntry[]) => (entryTexts: string[]) => LinkEntry[];
+const parseReadLaterListEntries: parseReadLaterListEntries = entries => entryTexts =>
 {
     if (entryTexts.length === 0) {
         return entries;
     } else {
         const [first, ...rest] = entryTexts;
-        return parseReadLaterListEntries(rest)([...entries, parseLinkEntry(first)]);
+        return parseReadLaterListEntries([...entries, parseLinkEntry(first)])(rest);
     }
 };
 
