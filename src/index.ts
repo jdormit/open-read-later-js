@@ -1,6 +1,7 @@
 import { pipe } from './util';
+import { validateReadLaterList } from './validator';
 
-interface LinkEntry
+export interface LinkEntry
     { url: string
     , title: string
     , tags?: string[]
@@ -8,7 +9,7 @@ interface LinkEntry
 
 type LinkEntryConfig = LinkEntry;
 
-interface ReadLaterList
+export interface ReadLaterList
     { links: LinkEntry[]
 //    , addLink: (link: LinkEntryConfig) => ReadLaterList
 //    , removeLink: (url: string) => ReadLaterList
@@ -41,6 +42,7 @@ const parseReadLaterList = (readLaterText: string): ReadLaterList =>
         , entries => entries.map(entry => entry.trim())
         , entryTexts => entryTexts.reduce((acc, entryText) => [...acc, parseLinkEntry(entryText)], [])
         , createReadLaterList
+        , validateReadLaterList
         )(readLaterText);
 
 export { parseReadLaterList };
