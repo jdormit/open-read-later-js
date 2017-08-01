@@ -91,12 +91,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = __webpack_require__(1);
 var createLinkEntry = function (_a) {
     var url = _a.url, title = _a.title, tags = _a.tags;
-    return ({ url: url, title: title, tags: tags });
+    return typeof tags === 'undefined' ? { url: url, title: title } : { url: url, title: title, tags: tags };
 };
 var parseColonDelimitedFields = function (fields) {
     return fields.reduce(function (fieldsObj, field) {
-        return util_1.pipe(function (f) { return /^(.+):\s?(.+)$/.exec(f); }, function (_a) {
-            var key = _a[0], val = _a[1];
+        return util_1.pipe(function (f) { return /^(.+?):\s?(.+)$/.exec(f); }, function (_a) {
+            var _ = _a[0], key = _a[1], val = _a[2];
             return (__assign((_b = {}, _b[key] = val, _b), fieldsObj));
             var _b;
         })(field);
@@ -104,29 +104,20 @@ var parseColonDelimitedFields = function (fields) {
 };
 // TODO handle tags parsing
 var parseLinkEntry = function (linkEntryText) {
-    return util_1.pipe(function (text) { return text.split('\n'); }, parseColonDelimitedFields, function (_a) {
-        var url = _a.url, title = _a.title, tags = _a.tags;
-        return createLinkEntry({ url: url, title: title, tags: tags });
-    })(linkEntryText);
+    return util_1.pipe(function (text) { return text.split('\n'); }, parseColonDelimitedFields, createLinkEntry)(linkEntryText);
 };
-var createReadLaterList = function () {
-    var linkEntries = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        linkEntries[_i] = arguments[_i];
-    }
-    return ({ links: linkEntries });
-};
+var createReadLaterList = function (linkEntries) { return ({ links: linkEntries }); };
 var parseReadLaterList = function (readLaterText) {
-    return util_1.pipe(function (text) { return text.split('---'); }, function (entries) { return entries.map(function (entry) { return entry.trim(); }); }, parseReadLaterListEntries, createReadLaterList)(readLaterText);
+    return util_1.pipe(function (text) { return text.split('---'); }, function (entries) { return entries.map(function (entry) { return entry.trim(); }); }, parseReadLaterListEntries([]), createReadLaterList)(readLaterText);
 };
 exports.parseReadLaterList = parseReadLaterList;
-var parseReadLaterListEntries = function (entryTexts) { return function (entries) {
+var parseReadLaterListEntries = function (entries) { return function (entryTexts) {
     if (entryTexts.length === 0) {
         return entries;
     }
     else {
         var first = entryTexts[0], rest = entryTexts.slice(1);
-        return parseReadLaterListEntries(rest)(entries.concat([parseLinkEntry(first)]));
+        return parseReadLaterListEntries(entries.concat([parseLinkEntry(first)]))(rest);
     }
 }; };
 
@@ -140,6 +131,8 @@ var parseReadLaterListEntries = function (entryTexts) { return function (entries
 Object.defineProperty(exports, "__esModule", { value: true });
 var pipe_1 = __webpack_require__(2);
 exports.pipe = pipe_1.default;
+var trace_1 = __webpack_require__(3);
+exports.trace = trace_1.default;
 
 
 /***/ }),
@@ -157,6 +150,21 @@ var pipe = function () {
     return function (x) { return funcs.reduce(function (y, f) { return f(y); }, x); };
 };
 exports.default = pipe;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var trace = function (label) { return function (v) {
+    var prettyV = JSON.stringify(v, null, '\t');
+    console.log(label + ": " + prettyV);
+    return v;
+}; };
+exports.default = trace;
 
 
 /***/ })
