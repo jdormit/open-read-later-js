@@ -111,13 +111,10 @@ var parseColonDelimitedFields = function (fields) {
         })(field);
     }, {});
 };
-var parseCommaSeparatedValues = function (values) {
-    return values.split(',').map(function (v) { return v.trim(); });
-};
 var parseLinkEntry = function (linkEntryText) {
     return util_1.pipe(function (text) { return text.split('\n'); }, parseColonDelimitedFields, function (_a) {
         var tags = _a.tags, fields = __rest(_a, ["tags"]);
-        return typeof tags === 'undefined' ? fields : __assign({ tags: parseCommaSeparatedValues(tags) }, fields);
+        return typeof tags === 'undefined' ? fields : __assign({ tags: tags.split(',').map(function (tag) { return tag.trim(); }) }, fields);
     }, createLinkEntry)(linkEntryText);
 };
 var createReadLaterList = function (linkEntries) { return ({ links: linkEntries }); };

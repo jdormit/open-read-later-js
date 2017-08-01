@@ -27,13 +27,10 @@ const parseColonDelimitedFields = (fields: string[]): any =>
                  , {}
                  );
 
-const parseCommaSeparatedValues = (values: string): string[] =>
-    values.split(',').map(v => v.trim());
-
 const parseLinkEntry = (linkEntryText: string): LinkEntry =>
     pipe( text => text.split('\n')
           , parseColonDelimitedFields
-          , ({tags, ...fields}) => typeof tags === 'undefined' ? fields : {tags: parseCommaSeparatedValues(tags), ...fields}
+          , ({tags, ...fields}) => typeof tags === 'undefined' ? fields : {tags: tags.split(',').map(tag => tag.trim()), ...fields}
           , createLinkEntry
         )(linkEntryText);
 
