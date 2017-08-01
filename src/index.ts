@@ -23,7 +23,7 @@ const createLinkEntry = ({url, title, tags}: LinkEntryConfig): LinkEntry =>
 const parseColonDelimitedFields = (fields: string[]): any =>
     fields.reduce((fieldsObj, field) =>
                   pipe( f => /^(.+?):\s?(.+)$/.exec(f)
-                      , ([_, key, val]) => ({ [key.trim()]: val.trim(), ...fieldsObj})
+                      , ([_, key, val]) => ({ ...fieldsObj, [key.trim()]: val.trim() })
                       )(field)
                  , {}
                  );
@@ -31,7 +31,7 @@ const parseColonDelimitedFields = (fields: string[]): any =>
 const parseLinkEntry = (linkEntryText: string): LinkEntry =>
     pipe( text => text.split('\n')
         , parseColonDelimitedFields
-        , ({tags, ...fields}) => typeof tags === 'undefined' ? fields : {tags: tags.split(',').map(tag => tag.trim()), ...fields}
+        , ({tags, ...fields}) => typeof tags === 'undefined' ? fields : {...fields, tags: tags.split(',').map(tag => tag.trim())}
         , createLinkEntry
         )(linkEntryText);
 

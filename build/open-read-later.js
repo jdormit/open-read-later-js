@@ -120,7 +120,7 @@ var parseColonDelimitedFields = function (fields) {
     return fields.reduce(function (fieldsObj, field) {
         return util_1.pipe(function (f) { return /^(.+?):\s?(.+)$/.exec(f); }, function (_a) {
             var _ = _a[0], key = _a[1], val = _a[2];
-            return (__assign((_b = {}, _b[key.trim()] = val.trim(), _b), fieldsObj));
+            return (__assign({}, fieldsObj, (_b = {}, _b[key.trim()] = val.trim(), _b)));
             var _b;
         })(field);
     }, {});
@@ -128,7 +128,7 @@ var parseColonDelimitedFields = function (fields) {
 var parseLinkEntry = function (linkEntryText) {
     return util_1.pipe(function (text) { return text.split('\n'); }, parseColonDelimitedFields, function (_a) {
         var tags = _a.tags, fields = __rest(_a, ["tags"]);
-        return typeof tags === 'undefined' ? fields : __assign({ tags: tags.split(',').map(function (tag) { return tag.trim(); }) }, fields);
+        return typeof tags === 'undefined' ? fields : __assign({}, fields, { tags: tags.split(',').map(function (tag) { return tag.trim(); }) });
     }, createLinkEntry)(linkEntryText);
 };
 var createReadLaterList = function (linkEntries) { return ({ links: linkEntries }); };
