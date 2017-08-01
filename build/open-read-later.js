@@ -213,7 +213,7 @@ var validator_1 = __webpack_require__(1);
 var linkEntryToString = function (linkEntry) {
     return typeof linkEntry.tags === 'undefined'
         ? "url: " + linkEntry.url + "\ntitle: " + linkEntry.title
-        : "url: " + linkEntry.url + "\ntitle: " + linkEntry.title + "\ntags: " + linkEntry.tags.join(',');
+        : "url: " + linkEntry.url + "\ntitle: " + linkEntry.title + "\ntags: " + linkEntry.tags.join(', ');
 };
 var createReadLaterList = function (linkEntries) {
     return ({ links: linkEntries,
