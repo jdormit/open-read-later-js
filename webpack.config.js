@@ -5,7 +5,8 @@ module.exports = {
     output: {
         filename: 'open-read-later.js',
         path: path.join(__dirname, 'build'),
-        library: 'OpenReadLater'
+        library: 'openReadLater',
+        libraryTarget: 'umd'
     },
     resolve: {
         extensions: ['.ts', '.js', '.json']

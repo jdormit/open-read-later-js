@@ -1,5 +1,14 @@
-var OpenReadLater =
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["openReadLater"] = factory();
+	else
+		root["openReadLater"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -78,7 +87,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     }
     return t;
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = __webpack_require__(1);
 var createLinkEntry = function (_a) {
     var url = _a.url, title = _a.title, tags = _a.tags;
@@ -107,6 +116,7 @@ var createReadLaterList = function () {
     }
     return ({ links: linkEntries });
 };
+exports.createReadLaterList = createReadLaterList;
 var parseReadLaterList = function (readLaterText) {
     return util_1.pipe(function (text) { return text.split('---'); }, function (entries) { return entries.map(function (entry) { return entry.trim(); }); }, parseReadLaterListEntries, createReadLaterList)(readLaterText);
 };
@@ -127,9 +137,9 @@ var parseReadLaterListEntries = function (entryTexts) { return function (entries
 
 "use strict";
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var pipe_1 = __webpack_require__(2);
-exports.pipe = pipe_1["default"];
+exports.pipe = pipe_1.default;
 
 
 /***/ }),
@@ -138,7 +148,7 @@ exports.pipe = pipe_1["default"];
 
 "use strict";
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var pipe = function () {
     var funcs = [];
     for (var _i = 0; _i < arguments.length; _i++) {
@@ -146,8 +156,9 @@ var pipe = function () {
     }
     return function (x) { return funcs.reduce(function (y, f) { return f(y); }, x); };
 };
-exports["default"] = pipe;
+exports.default = pipe;
 
 
 /***/ })
 /******/ ]);
+});

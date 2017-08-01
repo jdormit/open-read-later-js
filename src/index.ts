@@ -53,3 +53,5 @@ const parseReadLaterListEntries: parseReadLaterListEntries = entryTexts => entri
         return parseReadLaterListEntries(rest)([...entries, parseLinkEntry(first)]);
     }
 };
+
+export { createReadLaterList };
