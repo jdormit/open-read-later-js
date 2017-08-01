@@ -70,11 +70,24 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var pipe_1 = __webpack_require__(2);
+exports.pipe = pipe_1.default;
+var trace_1 = __webpack_require__(3);
+exports.trace = trace_1.default;
+
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97,7 +110,8 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var util_1 = __webpack_require__(1);
+var util_1 = __webpack_require__(0);
+var validator_1 = __webpack_require__(4);
 var createLinkEntry = function (_a) {
     var url = _a.url, title = _a.title, tags = _a.tags;
     return typeof tags === 'undefined' ? { url: url, title: title } : { url: url, title: title, tags: tags };
@@ -119,22 +133,9 @@ var parseLinkEntry = function (linkEntryText) {
 };
 var createReadLaterList = function (linkEntries) { return ({ links: linkEntries }); };
 var parseReadLaterList = function (readLaterText) {
-    return util_1.pipe(function (text) { return text.split('---'); }, function (entries) { return entries.map(function (entry) { return entry.trim(); }); }, function (entryTexts) { return entryTexts.reduce(function (acc, entryText) { return acc.concat([parseLinkEntry(entryText)]); }, []); }, createReadLaterList)(readLaterText);
+    return util_1.pipe(function (text) { return text.split('---'); }, function (entries) { return entries.map(function (entry) { return entry.trim(); }); }, function (entryTexts) { return entryTexts.reduce(function (acc, entryText) { return acc.concat([parseLinkEntry(entryText)]); }, []); }, createReadLaterList, validator_1.validateReadLaterList)(readLaterText);
 };
 exports.parseReadLaterList = parseReadLaterList;
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var pipe_1 = __webpack_require__(2);
-exports.pipe = pipe_1.default;
-var trace_1 = __webpack_require__(3);
-exports.trace = trace_1.default;
 
 
 /***/ }),
@@ -167,6 +168,41 @@ var trace = function (label) { return function (v) {
     return v;
 }; };
 exports.default = trace;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = __webpack_require__(0);
+var validateReadLaterList = function (readLaterList) {
+    return util_1.pipe(validateUniqueUrls)(readLaterList);
+};
+exports.validateReadLaterList = validateReadLaterList;
+var validateUniqueUrls = function (readLaterList) {
+    var urlCounts = readLaterList.links.reduce(function (urlCount, linkEntry) {
+        return typeof urlCount[linkEntry.url] === 'undefined' ? __assign({}, urlCount, (_a = {}, _a[linkEntry.url] = 1, _a)) : __assign({}, urlCount, (_b = {}, _b[linkEntry.url] = urlCount[linkEntry.url] + 1, _b));
+        var _a, _b;
+    }, {});
+    var repeatedUrls = Object.keys(urlCounts).filter(function (url) { return urlCounts[url] > 1; });
+    if (repeatedUrls.length > 0) {
+        throw new Error("List validation failed due to non-unique urls: " + repeatedUrls);
+    }
+    else {
+        return readLaterList;
+    }
+};
 
 
 /***/ })
