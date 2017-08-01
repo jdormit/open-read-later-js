@@ -29,7 +29,7 @@ describe('ReadLaterList', function() {
     describe('parsing', function() {
         it('should parse a standard Open Read-Later-formatted text', function() {
             const readLaterList = openReadLater.parseReadLaterList(readLaterText);
-            expect(readLaterList).to.deep.equal({
+            expect(readLaterList).to.deep.include({
                 links: [
                     {
                         url: 'https://example.com',
