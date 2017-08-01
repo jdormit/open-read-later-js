@@ -111,14 +111,8 @@ var parseReadLaterList = function (readLaterText) {
     return util_1.pipe(function (text) { return text.split('---'); }, function (entries) { return entries.map(function (entry) { return entry.trim(); }); }, parseReadLaterListEntries([]), createReadLaterList)(readLaterText);
 };
 exports.parseReadLaterList = parseReadLaterList;
-var parseReadLaterListEntries = function (entries) { return function (entryTexts) {
-    if (entryTexts.length === 0) {
-        return entries;
-    }
-    else {
-        var first = entryTexts[0], rest = entryTexts.slice(1);
-        return parseReadLaterListEntries(entries.concat([parseLinkEntry(first)]))(rest);
-    }
+var parseReadLaterListEntries = function (acc) { return function (entryTexts) {
+    return entryTexts.reduce(function (acc, entryText) { return acc.concat([parseLinkEntry(entryText)]); }, acc);
 }; };
 
 
