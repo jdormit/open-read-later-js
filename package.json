@@ -2,7 +2,7 @@
   "name": "open-read-later-js",
   "version": "0.1.0",
   "description": "A JavaScript implementation of the Open Read-Later specification",
-  "main": "src/index.js",
+  "main": "build/open-read-later.js",
   "scripts": {
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
