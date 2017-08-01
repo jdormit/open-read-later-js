@@ -66,11 +66,39 @@ var OpenReadLater =
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+exports.__esModule = true;
+var util_1 = __webpack_require__(1);
 var createLinkEntry = function (_a) {
     var url = _a.url, title = _a.title, tags = _a.tags;
     return ({ url: url, title: title, tags: tags });
+};
+var parseColonDelimitedFields = function (fields) {
+    return fields.reduce(function (fieldsObj, field) {
+        return util_1.pipe(function (f) { return /^(.+):\s?(.+)$/.exec(f); }, function (_a) {
+            var key = _a[0], val = _a[1];
+            return (__assign((_b = {}, _b[key] = val, _b), fieldsObj));
+            var _b;
+        })(field);
+    }, {});
+};
+// TODO handle tags parsing
+var parseLinkEntry = function (linkEntryText) {
+    return util_1.pipe(function (text) { return text.split('\n'); }, parseColonDelimitedFields, function (_a) {
+        var url = _a.url, title = _a.title, tags = _a.tags;
+        return createLinkEntry({ url: url, title: title, tags: tags });
+    })(linkEntryText);
 };
 var createReadLaterList = function () {
     var linkEntries = [];
@@ -79,6 +107,46 @@ var createReadLaterList = function () {
     }
     return ({ links: linkEntries });
 };
+var parseReadLaterList = function (readLaterText) {
+    return util_1.pipe(function (text) { return text.split('---'); }, function (entries) { return entries.map(function (entry) { return entry.trim(); }); }, parseReadLaterListEntries, createReadLaterList)(readLaterText);
+};
+var parseReadLaterListEntries = function (entryTexts) { return function (entries) {
+    if (entryTexts.length === 0) {
+        return entries;
+    }
+    else {
+        var first = entryTexts[0], rest = entryTexts.slice(1);
+        return parseReadLaterListEntries(rest)(entries.concat([parseLinkEntry(first)]));
+    }
+}; };
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+var pipe_1 = __webpack_require__(2);
+exports.pipe = pipe_1["default"];
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+var pipe = function () {
+    var funcs = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        funcs[_i] = arguments[_i];
+    }
+    return function (x) { return funcs.reduce(function (y, f) { return f(y); }, x); };
+};
+exports["default"] = pipe;
 
 
 /***/ })
