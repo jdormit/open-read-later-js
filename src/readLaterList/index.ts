@@ -26,7 +26,7 @@ const linkEntryToString = (linkEntry: LinkEntry): string =>
 title: ${linkEntry.title}`
     : `url: ${linkEntry.url}
 title: ${linkEntry.title}
-tags: ${linkEntry.tags.join(',')}`
+tags: ${linkEntry.tags.join(', ')}`
 
 const createReadLaterList = (linkEntries: LinkEntry[]): ReadLaterList =>
     ({ links: linkEntries
