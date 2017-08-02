@@ -1,6 +1,6 @@
 {
   "name": "open-read-later",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A JavaScript implementation of the Open Read-Later specification",
   "main": "build/open-read-later.js",
   "scripts": {
