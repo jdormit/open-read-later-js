@@ -28,6 +28,8 @@ title: ${linkEntry.title}`
 title: ${linkEntry.title}
 tags: ${linkEntry.tags.join(', ')}`
 
+const newReadLaterList = () => createReadLaterList([]);
+
 const createReadLaterList = (linkEntries: LinkEntry[]): ReadLaterList =>
     ({ links: linkEntries
      , addLink: function(link: LinkEntryConfig): ReadLaterList {
@@ -61,4 +63,5 @@ export { ReadLaterList
        , LinkEntry
        , createLinkEntry
        , createReadLaterList
+       , newReadLaterList
        }

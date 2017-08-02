@@ -3,6 +3,7 @@ import { ReadLaterList
        , LinkEntry
        , createReadLaterList
        , createLinkEntry
+       , newReadLaterList
        } from './readLaterList';
 import { validateReadLaterList } from './validator';
 
@@ -30,5 +31,6 @@ const parseReadLaterList = (readLaterText: string): ReadLaterList =>
         )(readLaterText);
 
 export { parseReadLaterList
+       , newReadLaterList
        , ReadLaterList
        };

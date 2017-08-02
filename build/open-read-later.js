@@ -147,6 +147,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = __webpack_require__(0);
 var readLaterList_1 = __webpack_require__(5);
+exports.newReadLaterList = readLaterList_1.newReadLaterList;
 var validator_1 = __webpack_require__(1);
 var parseColonDelimitedFields = function (fields) {
     return fields.reduce(function (fieldsObj, field) {
@@ -215,6 +216,8 @@ var linkEntryToString = function (linkEntry) {
         ? "url: " + linkEntry.url + "\ntitle: " + linkEntry.title
         : "url: " + linkEntry.url + "\ntitle: " + linkEntry.title + "\ntags: " + linkEntry.tags.join(', ');
 };
+var newReadLaterList = function () { return createReadLaterList([]); };
+exports.newReadLaterList = newReadLaterList;
 var createReadLaterList = function (linkEntries) {
     return ({ links: linkEntries,
         addLink: function (link) {
