@@ -26,7 +26,18 @@ url: https://jeremydormitzer.com
 title: The best website ever`;
 
 describe('ReadLaterList', function() {
-    describe('parsing', function() {
+    describe('newReadLaterList()', function() {
+        it('should create an empty readLaterList', function() {
+            const readLaterList = openReadLater.newReadLaterList();
+            expect(readLaterList).to.deep.include({ links: [] });
+            expect(readLaterList).to.have.all.keys('links', 'addLink', 'getLink', 'removeLink', 'updateLink', 'toString');
+            expect(readLaterList.addLink).to.be.a('function');
+            expect(readLaterList.getLink).to.be.a('function');
+            expect(readLaterList.updateLink).to.be.a('function');
+            expect(readLaterList.removeLink).to.be.a('function');
+            expect(readLaterList.toString).to.be.a('function');
+        });
+    });
         it('should parse a standard Open Read-Later-formatted text', function() {
             const readLaterList = openReadLater.parseReadLaterList(readLaterText);
             expect(readLaterList).to.deep.include({
