@@ -118,6 +118,12 @@ title: The best website ever`;
                     }
                 ]
             });
+            expect(readLaterList).to.have.all.keys('links', 'addLink', 'getLink', 'removeLink', 'updateLink', 'toString');
+            expect(readLaterList.addLink).to.be.a('function');
+            expect(readLaterList.getLink).to.be.a('function');
+            expect(readLaterList.updateLink).to.be.a('function');
+            expect(readLaterList.removeLink).to.be.a('function');
+            expect(readLaterList.toString).to.be.a('function');
         });
         it('should throw an error if link is added with a duplicate url', function() {
             const readLaterList = openReadLater.parseReadLaterList(readLaterText);
@@ -143,6 +149,12 @@ title: The best website ever`;
                     }
                 ]
             });
+            expect(readLaterList).to.have.all.keys('links', 'addLink', 'getLink', 'removeLink', 'updateLink', 'toString');
+            expect(readLaterList.addLink).to.be.a('function');
+            expect(readLaterList.getLink).to.be.a('function');
+            expect(readLaterList.updateLink).to.be.a('function');
+            expect(readLaterList.removeLink).to.be.a('function');
+            expect(readLaterList.toString).to.be.a('function');
         });
         it('should fail silently removing a link that does not exist', function() {
             const readLaterList = openReadLater.parseReadLaterList(readLaterText).removeLink('https://facebook.com');
@@ -164,6 +176,12 @@ title: The best website ever`;
                     }
                 ]
             });
+            expect(readLaterList).to.have.all.keys('links', 'addLink', 'getLink', 'removeLink', 'updateLink', 'toString');
+            expect(readLaterList.addLink).to.be.a('function');
+            expect(readLaterList.getLink).to.be.a('function');
+            expect(readLaterList.updateLink).to.be.a('function');
+            expect(readLaterList.removeLink).to.be.a('function');
+            expect(readLaterList.toString).to.be.a('function');
         });
     });
     describe('#getLink', function() {
