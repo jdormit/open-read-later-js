@@ -36,7 +36,7 @@ The core of the library involves creating and manipulating two types of objects:
 }
 ```
 
-For the most, `ReadLaterList` object methods are self-explanatory. It is important to note that the `addLink`, `updateLink`, and `removeLink` methods return a new `ReadLaterList` rather than mutating the existing one. This means they can be chained:
+For the most part, `ReadLaterList` object methods are self-explanatory. It is important to note that the `addLink`, `updateLink`, and `removeLink` methods return a new `ReadLaterList` rather than mutating the existing one. This means they can be chained:
 
 ```javascript
 const myReadLaterList = newReadLaterList()
