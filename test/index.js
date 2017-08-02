@@ -198,4 +198,40 @@ title: The best website ever`;
             expect(readLaterList.getLink('https://facebook.com')).to.be.undefined;
         });
     });
+    describe('#updateLink', function() {
+        it('should update a link', function() {
+            const readLaterList = openReadLater.parseReadLaterList(readLaterText);
+            const updatedList = readLaterList.updateLink('https://example.com', {
+                url: 'https://foo.example.com',
+                title: 'Updated example'
+            });
+            expect(updatedList).to.deep.include({
+                links: [
+                    {
+                        url: 'https://foo.example.com',
+                        title: 'Updated example'
+                    },
+                    {
+                        url: 'http://example.com',
+                        title: 'Example Two',
+                        tags: [ 'tag2', 'tag3', 'tag4' ]
+                    },
+                    {
+                        url: 'https://jeremydormitzer.com',
+                        title: 'The best website ever'
+                    }
+                ]
+            });
+            expect(updatedList).to.have.all.keys('links', 'addLink', 'getLink', 'removeLink', 'updateLink', 'toString');
+            expect(updatedList.addLink).to.be.a('function');
+            expect(updatedList.getLink).to.be.a('function');
+            expect(updatedList.updateLink).to.be.a('function');
+            expect(updatedList.removeLink).to.be.a('function');
+            expect(updatedList.toString).to.be.a('function');
+        });
+        it('should throw an error updating a link with a duplicate URL', function() {
+            const readLaterList = openReadLater.parseReadLaterList(readLaterText);
+            expect(() => readLaterList.updateLink('https://example.com', { url: 'http://example.com' })).to.throw();
+        });
+    });
 });
