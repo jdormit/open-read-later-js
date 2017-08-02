@@ -222,7 +222,7 @@ var createReadLaterList = function (linkEntries) {
             return util_1.pipe(createLinkEntry, function (linkEntry) { return createReadLaterList(_this.links.concat([linkEntry])); }, validator_1.validateReadLaterList)(link);
         },
         removeLink: function (url) {
-            return createReadLaterList(this.links.filter(function (link) { return link.url === url; }));
+            return createReadLaterList(this.links.filter(function (link) { return link.url !== url; }));
         },
         getLink: function (url) {
             return this.links.filter(function (link) { return link.url === url; })[0];

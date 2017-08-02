@@ -37,7 +37,7 @@ const createReadLaterList = (linkEntries: LinkEntry[]): ReadLaterList =>
                     )(link);
      }
      , removeLink: function(url: string): ReadLaterList {
-         return createReadLaterList(this.links.filter(link => link.url === url));
+         return createReadLaterList(this.links.filter(link => link.url !== url));
      }
      , getLink: function(url: string): LinkEntry {
          return this.links.filter(link => link.url === url)[0];
