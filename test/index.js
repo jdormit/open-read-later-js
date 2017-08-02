@@ -109,4 +109,43 @@ title: The best website ever`;
             })).to.throw();
         });
     });
+    describe('#removeLink', function() {
+        it('should remove a link', function() {
+            const readLaterList = openReadLater.parseReadLaterList(readLaterText).removeLink('https://example.com');
+            expect(readLaterList).to.deep.include({
+                links: [
+                   {
+                        url: 'http://example.com',
+                        title: 'Example Two',
+                        tags: [ 'tag2', 'tag3', 'tag4' ]
+                    },
+                    {
+                        url: 'https://jeremydormitzer.com',
+                        title: 'The best website ever'
+                    }
+                ]
+            });
+        });
+        it('should fail silently removing a link that does not exist', function() {
+            const readLaterList = openReadLater.parseReadLaterList(readLaterText).removeLink('https://facebook.com');
+            expect(readLaterList).to.deep.include({
+                links: [
+                    {
+                        url: 'https://example.com',
+                        title: 'Example One',
+                        tags: [ 'tag1', 'tag2' ]
+                    },
+                    {
+                        url: 'http://example.com',
+                        title: 'Example Two',
+                        tags: [ 'tag2', 'tag3', 'tag4' ]
+                    },
+                    {
+                        url: 'https://jeremydormitzer.com',
+                        title: 'The best website ever'
+                    }
+                ]
+            });
+        });
+    });
 });
