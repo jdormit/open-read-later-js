@@ -148,4 +148,18 @@ title: The best website ever`;
             });
         });
     });
+    describe('#getLink', function() {
+        it('should get a link', function() {
+            const readLaterList = openReadLater.parseReadLaterList(readLaterText);
+            const jeremyLink = readLaterList.getLink('https://jeremydormitzer.com');
+            expect(jeremyLink).to.deep.equal({
+                url: 'https://jeremydormitzer.com',
+                title: 'The best website ever'
+            });
+        });
+        it('should return undefined for a link that does not exist', function() {
+            const readLaterList = openReadLater.parseReadLaterList(readLaterText);
+            expect(readLaterList.getLink('https://facebook.com')).to.be.undefined;
+        });
+    });
 });
