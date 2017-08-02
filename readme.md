@@ -29,7 +29,7 @@ The core of the library involves creating and manipulating two types of objects:
 {
     links: LinkEntry[],
     addLink: (link: LinkEntry) => ReadLaterList,
-    getLink (url: string) => LinkEntry,
+    getLink: (url: string) => LinkEntry,
     updateLink: (url: string, newLink: LinkEntry) => ReadLaterList,
     removeLink: (url: string) => ReadLaterList,
     toString: () => string
