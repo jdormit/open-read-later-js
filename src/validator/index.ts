@@ -1,5 +1,5 @@
 import { pipe } from '../util';
-import { ReadLaterList } from '../index';
+import { ReadLaterList } from '../readLaterList';
 
 const validateReadLaterList = (readLaterList: ReadLaterList): ReadLaterList | never =>
     pipe( validateUniqueUrls

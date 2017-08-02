@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -80,9 +80,9 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var pipe_1 = __webpack_require__(3);
+var pipe_1 = __webpack_require__(4);
 exports.pipe = pipe_1.default;
-var trace_1 = __webpack_require__(4);
+var trace_1 = __webpack_require__(5);
 exports.trace = trace_1.default;
 
 
@@ -92,125 +92,9 @@ exports.trace = trace_1.default;
 
 "use strict";
 
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = __webpack_require__(0);
-var validateReadLaterList = function (readLaterList) {
-    return util_1.pipe(validateUniqueUrls)(readLaterList);
-};
-exports.validateReadLaterList = validateReadLaterList;
-var validateUniqueUrls = function (readLaterList) {
-    var urlCounts = readLaterList.links.reduce(function (urlCount, linkEntry) {
-        return typeof urlCount[linkEntry.url] === 'undefined' ? __assign({}, urlCount, (_a = {}, _a[linkEntry.url] = 1, _a)) : __assign({}, urlCount, (_b = {}, _b[linkEntry.url] = urlCount[linkEntry.url] + 1, _b));
-        var _a, _b;
-    }, {});
-    var repeatedUrls = Object.keys(urlCounts).filter(function (url) { return urlCounts[url] > 1; });
-    if (repeatedUrls.length > 0) {
-        throw new Error("List validation failed due to non-unique urls: " + repeatedUrls);
-    }
-    else {
-        return readLaterList;
-    }
-};
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
-            t[p[i]] = s[p[i]];
-    return t;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var util_1 = __webpack_require__(0);
-var readLaterList_1 = __webpack_require__(5);
-exports.newReadLaterList = readLaterList_1.newReadLaterList;
-var validator_1 = __webpack_require__(1);
-var parseColonDelimitedFields = function (fields) {
-    return fields.reduce(function (fieldsObj, field) {
-        return util_1.pipe(function (f) { return /^(.+?):\s?(.+)$/.exec(f); }, function (_a) {
-            var _ = _a[0], key = _a[1], val = _a[2];
-            return (__assign({}, fieldsObj, (_b = {}, _b[key.trim()] = val.trim(), _b)));
-            var _b;
-        })(field);
-    }, {});
-};
-var parseLinkEntry = function (linkEntryText) {
-    return util_1.pipe(function (text) { return text.split('\n'); }, parseColonDelimitedFields, function (_a) {
-        var tags = _a.tags, fields = __rest(_a, ["tags"]);
-        return typeof tags === 'undefined' ? fields : __assign({}, fields, { tags: tags.split(',').map(function (tag) { return tag.trim(); }) });
-    }, readLaterList_1.createLinkEntry)(linkEntryText);
-};
-var parseReadLaterList = function (readLaterText) {
-    return util_1.pipe(function (text) { return text.split('---'); }, function (entries) { return entries.map(function (entry) { return entry.trim(); }); }, function (entryTexts) { return entryTexts.reduce(function (acc, entryText) { return acc.concat([parseLinkEntry(entryText)]); }, []); }, readLaterList_1.createReadLaterList, validator_1.validateReadLaterList)(readLaterText);
-};
-exports.parseReadLaterList = parseReadLaterList;
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var pipe = function () {
-    var funcs = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        funcs[_i] = arguments[_i];
-    }
-    return function (x) { return funcs.reduce(function (y, f) { return f(y); }, x); };
-};
-exports.default = pipe;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var trace = function (label) { return function (v) {
-    var prettyV = JSON.stringify(v, null, '\t');
-    console.log(label + ": " + prettyV);
-    return v;
-}; };
-exports.default = trace;
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var util_1 = __webpack_require__(0);
-var validator_1 = __webpack_require__(1);
+var validator_1 = __webpack_require__(2);
 var linkEntryToString = function (linkEntry) {
     return typeof linkEntry.tags === 'undefined'
         ? "url: " + linkEntry.url + "\ntitle: " + linkEntry.title
@@ -245,6 +129,134 @@ var createLinkEntry = function (_a) {
     return typeof tags === 'undefined' ? { url: url, title: title } : { url: url, title: title, tags: tags };
 };
 exports.createLinkEntry = createLinkEntry;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = __webpack_require__(0);
+var validateReadLaterList = function (readLaterList) {
+    return util_1.pipe(validateUniqueUrls)(readLaterList);
+};
+exports.validateReadLaterList = validateReadLaterList;
+var validateUniqueUrls = function (readLaterList) {
+    var urlCounts = readLaterList.links.reduce(function (urlCount, linkEntry) {
+        return typeof urlCount[linkEntry.url] === 'undefined' ? __assign({}, urlCount, (_a = {}, _a[linkEntry.url] = 1, _a)) : __assign({}, urlCount, (_b = {}, _b[linkEntry.url] = urlCount[linkEntry.url] + 1, _b));
+        var _a, _b;
+    }, {});
+    var repeatedUrls = Object.keys(urlCounts).filter(function (url) { return urlCounts[url] > 1; });
+    if (repeatedUrls.length > 0) {
+        throw new Error("List validation failed due to non-unique urls: " + repeatedUrls);
+    }
+    else {
+        return readLaterList;
+    }
+};
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var readLaterList_1 = __webpack_require__(1);
+exports.newReadLaterList = readLaterList_1.newReadLaterList;
+var parser_1 = __webpack_require__(6);
+exports.parseReadLaterList = parser_1.parseReadLaterList;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var pipe = function () {
+    var funcs = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        funcs[_i] = arguments[_i];
+    }
+    return function (x) { return funcs.reduce(function (y, f) { return f(y); }, x); };
+};
+exports.default = pipe;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var trace = function (label) { return function (v) {
+    var prettyV = JSON.stringify(v, null, '\t');
+    console.log(label + ": " + prettyV);
+    return v;
+}; };
+exports.default = trace;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
+            t[p[i]] = s[p[i]];
+    return t;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = __webpack_require__(0);
+var readLaterList_1 = __webpack_require__(1);
+var validator_1 = __webpack_require__(2);
+var parseColonDelimitedFields = function (fields) {
+    return fields.reduce(function (fieldsObj, field) {
+        return util_1.pipe(function (f) { return /^(.+?):\s?(.+)$/.exec(f); }, function (_a) {
+            var _ = _a[0], key = _a[1], val = _a[2];
+            return (__assign({}, fieldsObj, (_b = {}, _b[key.trim()] = val.trim(), _b)));
+            var _b;
+        })(field);
+    }, {});
+};
+var parseLinkEntry = function (linkEntryText) {
+    return util_1.pipe(function (text) { return text.split('\n'); }, parseColonDelimitedFields, function (_a) {
+        var tags = _a.tags, fields = __rest(_a, ["tags"]);
+        return typeof tags === 'undefined' ? fields : __assign({}, fields, { tags: tags.split(',').map(function (tag) { return tag.trim(); }) });
+    }, readLaterList_1.createLinkEntry)(linkEntryText);
+};
+var parseReadLaterList = function (readLaterText) {
+    return util_1.pipe(function (text) { return text.split('---'); }, function (entries) { return entries.map(function (entry) { return entry.trim(); }); }, function (entryTexts) { return entryTexts.reduce(function (acc, entryText) { return acc.concat([parseLinkEntry(entryText)]); }, []); }, readLaterList_1.createReadLaterList, validator_1.validateReadLaterList)(readLaterText);
+};
+exports.parseReadLaterList = parseReadLaterList;
 
 
 /***/ })
